@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.5
+
+      - name: Format Terraform Code
+        id: fmt
+        run: terraform fmt -list=true -write=false -diff=true -check=true -recursive
+        continue-on-error: false
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          tflint_version: v0.26.0
+
+      - name: Lint Terraform Code
+        run: tflint
+        continue-on-error: false
+        shell: bash
