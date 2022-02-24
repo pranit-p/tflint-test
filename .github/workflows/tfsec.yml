@@ -22,9 +22,9 @@ jobs:
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v1
         with:
-          tflint_version: v0.26.0
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint Terraform Code
-        run: tflint
+        run: tflint -f compact
         continue-on-error: false
         shell: bash
