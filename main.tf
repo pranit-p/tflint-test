@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-    bucket                               = "ps-tfstate-backend"
-    
+  bucket = "ps-tfstate-backend"
+
 }
 
 data "aws_iam_policy_document" "deny_delete_kms_keys" {
@@ -97,7 +97,7 @@ resource "aws_organizations_policy" "security_scp" {
 }
 
 resource "aws_organizations_policy_attachment" "security_scp_attachments" {
-  for_each  = toset(["ou-ltxy-lktwu4sn","ou-ltxy-ngzx5yvt"])
+  for_each  = toset(["ou-ltxy-lktwu4sn", "ou-ltxy-ngzx5yvt"])
   policy_id = aws_organizations_policy.security_scp.id
   target_id = each.value
 }
