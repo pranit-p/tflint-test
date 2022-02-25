@@ -1,61 +1,60 @@
-# name: CI
+name: CI
 
-# on: [push, pull_request]
-
-# jobs:
-#   format:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v1
-#         with:
-#           terraform_version: 1.1.5
-
-#       - name: Format Terraform Code
-#         id: fmt
-#         run: terraform fmt -list=true -write=false -diff=true -check=true -recursive
-#         continue-on-error: false
-
-#       - name: Setup TFLint
-#         uses: terraform-linters/setup-tflint@v1
-#         with:
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-#       - name: Init TFLint
-#         run: tflint --init
-
-#       - name: Lint Terraform Code
-#         run: tflint -f compact
-#         continue-on-error: false
-#         shell: bash
-
-name: Lint
-on:
-  push:
-    branches: [master]
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  tflint:
+  format:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-        name: Checkout source code
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - uses: terraform-linters/setup-tflint@v1.1.0
-        name: Setup TFLint
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         with:
-          tflint_version: v0.29.0
+          terraform_version: 1.1.5
 
-      - name: Show version
-        run: tflint --version
+      - name: Format Terraform Code
+        id: fmt
+        run: terraform fmt -list=true -write=false -diff=true -check=true -recursive
+        continue-on-error: false
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Init TFLint
         run: tflint --init
 
-      - name: Run TFLint
+      - name: Lint Terraform Code
         run: tflint -f compact
+        continue-on-error: false
+        shell: bash
+# name: Lint
+# on:
+#   push:
+#     branches: [master]
+#   pull_request:
+
+# jobs:
+#   tflint:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+#         name: Checkout source code
+
+#       - uses: terraform-linters/setup-tflint@v1.1.0
+#         name: Setup TFLint
+#         with:
+#           tflint_version: v0.29.0
+
+#       - name: Show version
+#         run: tflint --version
+
+#       - name: Init TFLint
+#         run: tflint --init
+
+#       - name: Run TFLint
+#         run: tflint -f compact
