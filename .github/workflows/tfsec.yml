@@ -28,7 +28,7 @@ jobs:
         run: tflint --init
 
       - name: Lint Terraform Code
-        run: tflint -f compact
+        run: tflint -f compact  --module 
         continue-on-error: false
         shell: bash
 # name: Lint
