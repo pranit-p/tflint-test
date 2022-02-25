@@ -7,6 +7,11 @@ resource "aws_s3_bucket" "bucket" {
 
 }
 
+resource "aws_s3_bucket" "SDAPOAjsdbucket" {
+  bucket = "ps-tfstsaasate-backend"
+
+}
+
 data "aws_iam_policy_document" "deny_delete_kms_keys" {
   statement {
     sid    = "DenyDeletingKMSKeys"

@@ -21,10 +21,11 @@ jobs:
 
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v1
-        with:
-          tflint_version: v0.26.0
+
+      - name: Init TFLint
+        run: tflint --init
 
       - name: Lint Terraform Code
-        run: tflint
+        run: scripts/tflint.sh
         continue-on-error: false
         shell: bash
